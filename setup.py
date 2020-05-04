@@ -9,5 +9,5 @@ setup(
     author='Jon Jakobsson',
     author_email='jetjakobsson@gmail.com',
     keywords=['FlowSight', 'flowcytometry'],
-    url='https://github.com/JonETJakobsson/FlowSight'
+    url='https://github.com/JonETJakobsson/FlowSightpy'
 )
