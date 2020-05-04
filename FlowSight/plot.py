@@ -35,7 +35,7 @@ def cluster(adata, n_pcs=6, n_neighbors=10, resolution=1):
 
         return adata
 
-def plot_group(adata, groupby="leiden", group="1", n_img=10):
+def group_sample(adata, groupby="leiden", group="1", n_img=10, channels=["Ch1", "Ch6"]):
     '''Plot sample images of cells found in selected groups'''
     import numpy as np
     import matplotlib.pyplot as plt
@@ -44,26 +44,26 @@ def plot_group(adata, groupby="leiden", group="1", n_img=10):
     adata_g = adata.copy()
     adata_g = adata_g[adata_g.obs[groupby] == group]
     df = adata_g.obs
+    # get random samples from the group
     df = df.loc[np.random.choice(df.index, size=n_img, replace=False)]
     
-
-    im = []
+    # Collect all images in a list
+    im = list()
     for row in df.iterrows():
-        files = [row[1].Ch1, row[1].Ch4 ,row[1].Ch6]
+        files = list()
+        for ch in channels:
+                files.append(row[1][ch])
         im.append(tifffile.imread(files))
+
+
+    #plot all images in rows
     i=1
-    plt.figure(figsize=(8, n_img*1), facecolor='black')
+    plt.figure(figsize=(len(channels)*2, n_img*1), facecolor='black')
     for row in im:
-        plt.subplot(len(im),3, i, frameon=False)
-        plt.imshow(row[0], cmap="gray", )
-
-        plt.subplot(len(im),3, i+1,frameon=False)
-        plt.imshow(row[1], cmap="hot")
-
-        plt.subplot(len(im),3, i+2, frameon=False)
-        plt.imshow(row[2], cmap="gray")
-
-        i +=3
+            for image in row:
+                plt.subplot(len(im),len(channels), i, frameon=False)
+                plt.imshow(image, cmap="gray")
+                i += 1
     plt.subplots_adjust(hspace=0.2)
 
     
