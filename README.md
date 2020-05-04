@@ -7,6 +7,6 @@ This package uses [Scanpy](https://scanpy.readthedocs.io/en/latest/api/index.htm
 
 Use `dataset.load()` to read in all data into a pandas dataframe. then `dataset.to_adata()` to convert this dataframe into a workable AnnData object. Only non flourescent features are used as variables. These are transformed and scaled to work with PCA. Other features are added as observations to facilitate explorative plotting. These observations are only transformed. Use `plot.PCA()` to run pca and plot an overview. Use `plot.cluster()` to find clusters in the data based on a neighberhood graph and the leiden algorithm. Use `plot.group_sample()` to get sample images of particles from specified groups. Use this to find out where your particles of interest are, and how many groups ofthese that you have.
 
-See this "test/Test notebook.ipynb" for an example of all functions. 
+See "test/Test notebook.ipynb" for an example of all functions. 
 
 
