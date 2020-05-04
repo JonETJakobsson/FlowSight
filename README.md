@@ -6,3 +6,5 @@ Export features for each particle as .txt files using IDEAS software.
 Create a dictionary that links an "experiment name" to the exported .txt file.
 
 Create a folder called data/"experiment name"/ and export all particle images as tiff files to this directory for each experiment.
+
+See the notebook under test/ for an example.
