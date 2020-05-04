@@ -1,6 +1,0 @@
-LICENSE
-README.md
-FlowSight.egg-info/PKG-INFO
-FlowSight.egg-info/SOURCES.txt
-FlowSight.egg-info/dependency_links.txt
-FlowSight.egg-info/top_level.txt

@@ -1,7 +1,7 @@
 from setuptools import setup
 
 setup(
-    name='FlowSight',
+    name='FlowSightpy',
     version='0.0.1',
     description='analyse flowsight data using python',
     license='MIT',
