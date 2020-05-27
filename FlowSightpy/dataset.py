@@ -1,8 +1,8 @@
 
-def load(datasets):
+def load(datasets, skiprows=3):
     '''Loads and merge all datasets
 
-    datasets: a dictionary with names of datasts as heys, and file locations as values.
+    datasets: a dictionary with names of datasts as keys, and file locations as values.
 
     return: pandas.DataFrame'''
     
@@ -11,10 +11,14 @@ def load(datasets):
 
     dflist = list()
 
-    for name, file in datasets.items():
-        df = pd.read_csv(file, sep="\t", skiprows=1, index_col=0)
+    for name, f in datasets.items():
+        df = pd.read_csv(f, sep="\t", skiprows=skiprows, index_col=0, decimal=",")
         df["experiment"] = name
         df["old_index"] = df.index
+        path = f.split("/")
+        path.pop()
+        path = "/".join(path)
+        df["path"] = path
         dflist.append(df)
     
     df = reduce(lambda x, y: pd.merge(x, y, how="outer"), dflist)
@@ -80,7 +84,7 @@ def to_adata(df, used_channels):
     
     
     for ch in used_channels:
-        adata.obs[ch] = [f"data/{e[1]['experiment']}/{e[1]['old_index']}_{ch}.ome.tif" for e in adata.obs.iterrows()]
+        adata.obs[ch] = [f"{e[1]['path']}/{e[1]['old_index']}_{ch}.ome.tif" for e in adata.obs.iterrows()]
 
     return adata
 

@@ -30,7 +30,7 @@ def cluster(adata, n_pcs=6, n_neighbors=10, resolution=1):
         # Embed KNN graph in 2 dimentions
         sc.tl.umap(adata)
 
-        # Leiden groups and the 5 different experiments
+        # Leiden groups and the different experiments
         sc.pl.umap(adata, color=["leiden", "experiment"])
 
         return adata
@@ -55,15 +55,24 @@ def group_sample(adata, groupby="leiden", group="1", n_img=10, channels=["Ch1", 
                 files.append(row[1][ch])
         im.append(tifffile.imread(files))
 
-
-    #plot all images in rows
-    i=1
-    plt.figure(figsize=(len(channels)*2, n_img*1), facecolor='black')
-    for row in im:
-            for image in row:
-                plt.subplot(len(im),len(channels), i, frameon=False)
+    if len(channels)==1: # If only one channel, print a collage of the images instead of rows
+        print("lets print a collage")
+        i = 1
+        plt.figure(figsize=(15, n_img/10*1), facecolor='black')
+        for image in im:
+                plt.subplot(int(n_img/10), 10, i, frameon=False)
                 plt.imshow(image, cmap="gray")
                 i += 1
-    plt.subplots_adjust(hspace=0.2)
+
+    else:        
+        #plot all images in rows
+        i=1
+        plt.figure(figsize=(len(channels)*2, n_img*1), facecolor='black')
+        for row in im:
+                for image in row:
+                        plt.subplot(len(im),len(channels), i, frameon=False)
+                        plt.imshow(image, cmap="gray")
+                        i += 1
+        plt.subplots_adjust(hspace=0.2)
 
     
